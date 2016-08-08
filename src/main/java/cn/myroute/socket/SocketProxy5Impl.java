@@ -22,7 +22,7 @@ public class SocketProxy5Impl implements SocketProxy{
 		for(int i = 2;i < 2 + aSize;i++){
 			aMethod.add(buffer[i]);
 		}
-		if(!aMethod.contains(0x0)){
+		if(!aMethod.contains((byte)0)){
 			throw new IllegalArgumentException("aMethod:"+aMethod);
 		}
 		

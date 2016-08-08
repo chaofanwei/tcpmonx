@@ -17,7 +17,25 @@ public class DnsUtil {
 			e.printStackTrace();
 		}
 	}
+	
 	public static void initDns(){
+		new Thread(){
+			public void run() {
+			//	setDaemon(true);
+				while(true){
+					initDns2();
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			};
+		}.start();
+	}
+	public static void initDns2(){
+		
 		String jreVersion = "1.6";
 		Method cacheAddressMethod = null;
 		final Class<InetAddress> clazz = java.net.InetAddress.class;
