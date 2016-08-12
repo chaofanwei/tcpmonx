@@ -81,10 +81,12 @@ public class Util {
     	}  
     	String domain= sb.toString();
     	try {
-    		
-			return InetAddress.getByName(domain).getHostAddress();
+    		TLogger.log("parse host:"+domain);
+    		String ip = InetAddress.getByName(domain).getHostAddress();
+    		TLogger.log("parse host:"+domain +", to ip : " + ip);
+			return ip;
 		} catch (UnknownHostException e) {
-			System.err.println("domain:"+domain);
+			TLogger.log("parse fail ,domain:"+domain);
 			e.printStackTrace();
 		}  
     	return "127.0.0.1";
