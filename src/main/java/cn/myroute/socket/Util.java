@@ -92,10 +92,14 @@ public class Util {
   
     public static int findPort(byte[] bArray, int begin, int end) {  
         int port = 0;  
-        for (int i = begin; i <= end; i++) {  
-            port <<= 16;  
-            port += bArray[i];  
-        }  
+        int pre= bArray[begin] & 0xff;
+        int sec= bArray[begin + 1] & 0xff;
+        port = pre << 8;
+        port = port | sec;
+//        for (int i = begin; i <= end; i++) {  
+//            port <<= 16;  
+//            port += bArray[i];  
+//        }  
         return port;  
     }  
     

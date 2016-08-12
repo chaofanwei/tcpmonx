@@ -22,4 +22,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <build>
+  	<finalName>tcpmon-1.0</finalName>
+  </build>
 </project>

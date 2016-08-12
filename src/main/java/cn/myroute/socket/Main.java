@@ -12,7 +12,7 @@ public class Main {
     		port = Integer.valueOf(args[0]);
     	}
         ServerSocket serverSocket = new ServerSocket(port);  
-        System.out.println("listing on port :" + port);
+        TLogger.log("listing on port :" + port);
         DnsUtil.initDns();
         while (true) {  
             Socket socket = null;  

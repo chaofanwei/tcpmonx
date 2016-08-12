@@ -25,7 +25,7 @@ public class DnsUtil {
 				while(true){
 					initDns2();
 					try {
-						Thread.sleep(3000);
+						Thread.sleep(10000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -35,7 +35,7 @@ public class DnsUtil {
 		}.start();
 	}
 	public static void initDns2(){
-		
+		TLogger.log("reinit dns");
 		String jreVersion = "1.6";
 		Method cacheAddressMethod = null;
 		final Class<InetAddress> clazz = java.net.InetAddress.class;

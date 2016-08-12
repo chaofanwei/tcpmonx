@@ -21,13 +21,13 @@ public class SocketThreadInput extends Thread {
             int len;  
             while ((len = isOut.read(buffer)) != -1) {  
                 if (len > 0) {  
-                  //  System.out.println(new String(buffer, 0, len));  
+                	TLogger.log(new String(buffer, 0, len));  
                     osIn.write(buffer, 0, len);  
                     osIn.flush();  
                 }  
             }  
         } catch (Exception e) {  
-            System.out.println("SocketThreadInput leave");  
+        	TLogger.log("SocketThreadInput leave,e:"+e.getLocalizedMessage());  
         }  
     }  
 }  

@@ -15,11 +15,11 @@ public class ProxyController  extends Thread{
     	Socket socketOut = null;
     	byte[] buffer = new byte[4096];
         try {  
-            System.out.println("\n\na client connect " + socketIn.getInetAddress() + ":" + socketIn.getPort());  
+            TLogger.log("\n\na client connect " + socketIn.getInetAddress() + ":" + socketIn.getPort());  
             InputStream isIn = socketIn.getInputStream();  
             OutputStream osIn = socketIn.getOutputStream();  
             int len = isIn.read(buffer);  
-            System.out.println("< " + Util.bytesToHexString(buffer, 0, len));
+            TLogger.log("< " + Util.bytesToHexString(buffer, 0, len));
             
             SocketProxy socketProxy = null;
             
@@ -43,7 +43,7 @@ public class ProxyController  extends Thread{
             out.join();  
             in.join();  
         } catch (Exception e) {  
-            System.out.println("a client leave"); 
+            TLogger.log("a client leave,e:"+e.getLocalizedMessage()); 
             e.printStackTrace();
         } finally {  
             try {  
@@ -61,6 +61,6 @@ public class ProxyController  extends Thread{
             	e.printStackTrace();  
             }  
         }  
-        System.out.println("socket close");  
+        TLogger.log("socket close");  
     }  
 }
