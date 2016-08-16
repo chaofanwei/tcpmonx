@@ -316,8 +316,9 @@ class Connection extends Thread {
                 String s1;
                 String lastLine = null;
                 for (; ;) {
-                    int len;
-                    len = tmpIn1.read(b1, 0, 1);
+                    int len = -1;
+                    if(tmpIn1.available() > 0)
+					len = tmpIn1.read(b1, 0, 1);
                     if (len == -1) {
                         break;
                     }
@@ -380,9 +381,10 @@ class Connection extends Thread {
            // outSocket = new Socket(targetHost, targetPort);
             //modify start
             outSocket = new Socket();
+            outSocket.setSoTimeout(3000);
             bindSocket(outSocket);
             System.out.println("target:"+targetHost + ":" + targetPort);
-            outSocket.connect(new InetSocketAddress(targetHost, targetPort));
+            outSocket.connect(new InetSocketAddress(targetHost, targetPort),1000);
             //modify end
             
             
