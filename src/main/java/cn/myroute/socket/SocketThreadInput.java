@@ -21,7 +21,7 @@ public class SocketThreadInput extends Thread {
             int len;  
             while ((len = isOut.read(buffer)) != -1) {  
                 if (len > 0) {  
-                	TLogger.log(new String(buffer, 0, len));  
+                	//TLogger.log(new String(buffer, 0, len));  
                     osIn.write(buffer, 0, len);  
                     osIn.flush();  
                 }  

@@ -22,10 +22,12 @@ public class DnsUtil {
 		new Thread(){
 			public void run() {
 			//	setDaemon(true);
+				Method cacheAddressMethod = initMethod();
 				while(true){
-					initDns2();
+					
+					initDns2(cacheAddressMethod);
 					try {
-						Thread.sleep(10000);
+						Thread.sleep(20000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -34,11 +36,10 @@ public class DnsUtil {
 			};
 		}.start();
 	}
-	public static void initDns2(){
-		TLogger.log("reinit dns");
+	final static Class<InetAddress> clazz = java.net.InetAddress.class;
+	public static Method initMethod(){
 		String jreVersion = "1.6";
-		Method cacheAddressMethod = null;
-		final Class<InetAddress> clazz = java.net.InetAddress.class;
+		Method cacheAddressMethod = null;		
 		try {
 			jreVersion=System.getProperties().getProperty("java.specification.version");
 			
@@ -53,6 +54,10 @@ public class DnsUtil {
 		}catch (Exception e1) {
 			e1.printStackTrace();
 		}
+		return cacheAddressMethod;
+	}
+	public static void initDns2(Method cacheAddressMethod){
+		TLogger.log("reinit dns");
 		
 		BufferedReader br = null;
 		try {
