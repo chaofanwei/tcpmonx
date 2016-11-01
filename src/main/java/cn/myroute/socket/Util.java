@@ -43,7 +43,7 @@ public class Util {
 	                    if (inetAddress != null && inetAddress instanceof Inet4Address) { // IPV4
 	                    	if(!inetAddress.isLoopbackAddress()){
 	                    		 ip = inetAddress.getHostAddress();
-	                             if(ip.startsWith("10.10.17")){
+	                             if(ip.startsWith("30.96.74")){
 	                            	 bindIp = ip;
 	                             }
 	                    	}

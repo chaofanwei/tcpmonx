@@ -20,6 +20,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 
+import cn.myroute.socket.Util;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -382,7 +384,7 @@ class Connection extends Thread {
             //modify start
             outSocket = new Socket();
             outSocket.setSoTimeout(3000);
-            bindSocket(outSocket);
+            Util.bindSocket(outSocket);
             System.out.println("target:"+targetHost + ":" + targetPort);
             outSocket.connect(new InetSocketAddress(targetHost, targetPort),1000);
             //modify end
@@ -474,44 +476,6 @@ class Connection extends Thread {
         }
     }
 
-    private void bindSocket(Socket outSocket2) {
-    	String bindIp = System.getProperty("bindIp");
-    	if ((bindIp == null) || bindIp.trim().equals("")) {
-	        try {
-	            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
-	            NetworkInterface networkInterface;
-	            Enumeration<InetAddress> inetAddresses;
-	            InetAddress inetAddress;
-	            String ip;
-	            while (networkInterfaces.hasMoreElements()) {
-	                networkInterface = networkInterfaces.nextElement();
-	                inetAddresses = networkInterface.getInetAddresses();
-	                while (inetAddresses.hasMoreElements()) {
-	                    inetAddress = inetAddresses.nextElement();
-	                    if (inetAddress != null && inetAddress instanceof Inet4Address) { // IPV4
-	                    	if(!inetAddress.isLoopbackAddress()){
-	                    		 ip = inetAddress.getHostAddress();
-	                             if(ip.startsWith("10.10.17")){
-	                            	 bindIp = ip;
-	                             }
-	                    	}
-	                    }
-	                }
-	            }
-	        } catch (SocketException e) {
-	            e.printStackTrace();
-	        }
-        }
-    	if ((bindIp != null) && !bindIp.trim().equals("")) {
-    		try {
-				outSocket2.bind(new InetSocketAddress(bindIp, 0));
-				System.out.println("success bind ip : " + bindIp);
-			} catch (IOException e) {
-				System.err.println("bindIp : " + bindIp);
-				e.printStackTrace();
-			}
-    	}
-	}
 
 	/**
      * Method wakeUp
