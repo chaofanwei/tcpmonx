@@ -25,6 +25,8 @@ public class SocketThreadOutput extends Thread {
             while ((len = isIn.read(buffer)) != -1) {  
                 if (len > 0) {  
                 	//TLogger.log(new String(buffer, 0, len));  
+                	System.out.println("out hex:"+Util.bytesToHexString(buffer,len));
+                	System.out.println("out string:\r\n"+new String(buffer,0,len));
                     osOut.write(buffer, 0, len);  
                     osOut.flush();  
                 }  
