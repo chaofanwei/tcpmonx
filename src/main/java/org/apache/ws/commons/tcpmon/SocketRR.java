@@ -92,6 +92,8 @@ class SocketRR extends Thread {
      * Field slowLink
      */
     SlowLinkSimulator slowLink;
+    
+    boolean debug;
 
     /**
      * Constructor SocketRR
@@ -112,7 +114,7 @@ class SocketRR extends Thread {
                     InputStream inputStream, Socket outputSocket,
                     OutputStream outputStream, JTextArea _textArea,
                     boolean format, TableModel tModel, int index,
-                    final String type, SlowLinkSimulator slowLink) {
+                    final String type, SlowLinkSimulator slowLink,boolean debug) {
         inSocket = inputSocket;
         in = inputStream;
         outSocket = outputSocket;
@@ -124,6 +126,7 @@ class SocketRR extends Thread {
         this.type = type;
         myConnection = c;
         this.slowLink = slowLink;
+        this.debug = debug;
         start();
     }
 
@@ -145,6 +148,9 @@ class SocketRR extends Thread {
      */
     public void run() {
         try {
+        	if(debug){
+        		System.out.println("debug");
+        	}
             byte[] buffer = new byte[4096];
             byte[] tmpbuffer = new byte[8192];
             int saved = 0;

@@ -34,7 +34,7 @@ public class DnsUtil {
 					}
 				}
 			};
-		}.start();
+		};
 	}
 	final static Class<InetAddress> clazz = java.net.InetAddress.class;
 	public static Method initMethod(){

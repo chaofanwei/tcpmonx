@@ -245,6 +245,7 @@ class Connection extends Thread {
             }
             String bufferedData = null;
             StringBuffer buf = null;
+            boolean debug = false;
             int index = listener.connections.indexOf(this);
             if (listener.isProxyBox.isSelected() || (HTTPProxyHost != null)) {
 
@@ -267,6 +268,10 @@ class Connection extends Thread {
                 }
                 bufferedData = buf.toString();
                 inputText.append(bufferedData);
+                if(bufferedData.contains("/c/manage/dashboard/chart")){
+                	System.out.println(bufferedData);
+                	debug = true;
+                }
                 if (bufferedData.startsWith("GET ")
                         || bufferedData.startsWith("POST ")
                         || bufferedData.startsWith("PUT ")
@@ -402,7 +407,7 @@ class Connection extends Thread {
             // this is the channel to the endpoint
             rr1 = new SocketRR(this, inSocket, tmpIn1, outSocket, tmpOut2,
                     inputText, format, listener.tableModel,
-                    index + 1, "request:", slowLink);
+                    index + 1, "request:", slowLink,false);
 
             // create the response slow link from the inbound slow link
             SlowLinkSimulator responseLink =
@@ -411,7 +416,7 @@ class Connection extends Thread {
             // this is the channel from the endpoint
             rr2 = new SocketRR(this, outSocket, tmpIn2, inSocket, tmpOut1,
                     outputText, format, null, 0, "response:",
-                    responseLink);
+                    responseLink,debug);
             
             while ((rr1 != null) || (rr2 != null)) {
 

@@ -3,6 +3,7 @@ package cn.myroute.socket;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.concurrent.CountDownLatch;
 
 public class ProxyController  extends Thread{
 	protected Socket socketIn;  
@@ -35,13 +36,22 @@ public class ProxyController  extends Thread{
             
             InputStream isOut = socketOut.getInputStream();  
             OutputStream osOut = socketOut.getOutputStream(); 
-             
-            SocketThreadOutput out = new SocketThreadOutput(isIn, osOut);  
+            CountDownLatch countDownLatch = new CountDownLatch(1);
+            SocketThreadOutput out = new SocketThreadOutput(isIn, osOut, countDownLatch);  
             out.start();  
-            SocketThreadInput in = new SocketThreadInput(isOut, osIn);  
+            SocketThreadInput in = new SocketThreadInput(isOut, osIn, countDownLatch);  
             in.start();  
-            out.join();  
-            in.join();  
+            
+            countDownLatch.await();
+        	if(!out.isClosed()){
+        		Thread.sleep(20);
+            	out.interrupt();
+            }
+        	if(!in.isClosed()){
+        		Thread.sleep(20);
+        		out.interrupt();
+        	}
+        	TLogger.log("\n\na client connect end " + socketIn.getInetAddress() + ":" + socketIn.getPort());  
         } catch (Exception e) {  
             TLogger.log("a client leave,e:"+e.getLocalizedMessage()); 
             e.printStackTrace();
